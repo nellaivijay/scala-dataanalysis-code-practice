@@ -1,24 +1,73 @@
-organization := "com.packt"
+organization := "com.scalaanalysis"
 
-name := "scala-dataanalysis-cookbook"
+name := "scala-dataanalysis-code-practice"
 
-lazy val root = project.in(file("."))
-  .aggregate(chapter1breezeready)
-  .aggregate(chapter1sparkcsv)
-  .aggregate(chapter3dataload)
-  .aggregate(chapter3dataloadparquet)
-  .aggregate(chapter4visualization)
-  .aggregate(chapter5learning)
-  .aggregate(chapter6scalingup)
-  .aggregate(chapter7goingfurther)
-
-lazy val chapter1breezeready = project.in( file("chapter1-breeze-gettingready"))
-lazy val chapter1sparkcsv = project.in( file("chapter1-spark-csv"))
-lazy val chapter3dataload = project.in( file("chapter3-data-loading"))
-lazy val chapter3dataloadparquet = project.in( file("chapter3-data-loading-parquet"))
-lazy val chapter4visualization = project.in( file("chapter4-visualization"))
-lazy val chapter5learning = project.in( file("chapter5-learning"))
-lazy val chapter6scalingup = project.in( file("chapter6-scalingup"))
-lazy val chapter7goingfurther = project.in( file("chapter7-goingfurther"))
+version := "1.0.0"
 
 scalaVersion := "2.10.4"
+
+libraryDependencies ++= Seq(
+  // Breeze for numerical computing
+  "org.scalanlp" %% "breeze" % "0.13",
+  
+  // Apache Spark core
+  "org.apache.spark" %% "spark-core" % "1.6.0",
+  
+  // Spark SQL
+  "org.apache.spark" %% "spark-sql" % "1.6.0",
+  
+  // Spark MLlib for machine learning
+  "org.apache.spark" %% "spark-mllib" % "1.6.0",
+  
+  // Spark Streaming
+  "org.apache.spark" %% "spark-streaming" % "1.6.0",
+  
+  // Spark Streaming Kafka integration
+  "org.apache.spark" %% "spark-streaming-kafka" % "1.6.0",
+  
+  // Spark GraphX
+  "org.apache.spark" %% "spark-graphx" % "1.6.0",
+  
+  // Twitter4J for Twitter streaming
+  "org.twitter4j" % "twitter4j-core" % "4.0.2",
+  
+  // JSON processing
+  "org.json4s" %% "json4s-jackson" % "3.2.11",
+  
+  // Logging
+  "org.slf4j" % "slf4j-api" % "1.7.21",
+  "ch.qos.logback" % "logback-classic" % "1.1.7"
+)
+
+// Resolvers
+resolvers ++= Seq(
+  "Apache Releases" at "https://repository.apache.org/content/repositories/releases/",
+  "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
+  "Scala Tools Maven2 Repository" at "http://scala-tools.org/repo-releases"
+)
+
+// Compiler options
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-unchecked",
+  "-feature",
+  "-Xlint"
+)
+
+// Java options
+javaOptions ++= Seq(
+  "-Xmx2G",
+  "-Xms512M"
+)
+
+// Fork to run tests in a separate JVM
+fork in Test := true
+
+// Parallel execution of tests
+parallelExecution in Test := false
+
+// Assembly settings for creating fat JARs
+assemblyMergeStrategy in assembly := {
+  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+  case x => MergeStrategy.first
+}

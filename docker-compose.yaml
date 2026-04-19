@@ -1,0 +1,203 @@
+version: '3.8'
+
+services:
+  # Spark Master
+  spark-master:
+    image: apache/spark:1.6.0
+    container_name: spark-master
+    ports:
+      - "${SPARK_MASTER_UI_PORT:-8080}:8080"
+      - "${SPARK_MASTER_PORT:-7077}:7077"
+    environment:
+      SPARK_MASTER: "spark://spark-master:7077"
+      SPARK_MASTER_UI_PORT: 8080
+      SPARK_MASTER_PORT: 7077
+      SPARK_DRIVER_MEMORY: ${SPARK_DRIVER_MEMORY:-2g}
+      SPARK_EXECUTOR_MEMORY: ${SPARK_EXECUTOR_MEMORY:-4g}
+      SPARK_EXECUTOR_CORES: ${SPARK_EXECUTOR_CORES:-2}
+    volumes:
+      - ./data:/data
+      - ./logs:/logs
+      - spark_master_data:/spark
+    command: >
+      sh -c "
+        echo 'Starting Spark Master...' &&
+        $SPARK_HOME/sbin/start-master.sh
+      "
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Spark Worker
+  spark-worker:
+    image: apache/spark:1.6.0
+    container_name: spark-worker
+    environment:
+      SPARK_WORKER: "spark://spark-master:7077"
+      SPARK_DRIVER_MEMORY: ${SPARK_DRIVER_MEMORY:-2g}
+      SPARK_EXECUTOR_MEMORY: ${SPARK_EXECUTOR_MEMORY:-4g}
+      SPARK_EXECUTOR_CORES: ${SPARK_EXECUTOR_CORES:-2}
+    volumes:
+      - ./data:/data
+      - ./logs:/logs
+      - spark_worker_data:/spark
+    depends_on:
+      spark-master:
+        condition: service_started
+    command: >
+      sh -c "
+        echo 'Starting Spark Worker...' &&
+        $SPARK_HOME/sbin/start-worker.sh spark://spark-master:7077
+      "
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Spark History Server
+  spark-history:
+    image: apache/spark:1.6.0
+    container_name: spark-history-server
+    ports:
+      - "${SPARK_HISTORY_PORT:-18080}:18080"
+    environment:
+      SPARK_HISTORY_OPTS: >
+        -Dspark.history.fs.logDirectory=/spark-events
+        -Dspark.history.provider=org.apache.spark.deploy.history.FsHistoryProvider
+    volumes:
+      - ./logs/spark-events:/spark-events
+      - spark_history_data:/spark
+    depends_on:
+      spark-master:
+        condition: service_started
+    command: >
+      sh -c "
+        echo 'Starting Spark History Server...' &&
+        $SPARK_HOME/sbin/start-history-server.sh
+      "
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Zookeeper (required for Kafka)
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    volumes:
+      - zookeeper_data:/var/lib/zookeeper/data
+      - zookeeper_logs:/var/lib/zookeeper/log
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "2181"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Kafka
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_LOG_RETENTION_HOURS: 168
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions --bootstrap-server localhost:9092"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Kafka UI (optional, for monitoring)
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    ports:
+      - "8085:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: scala-data-analysis
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+  # Apache Zeppelin (for visualization chapters)
+  zeppelin:
+    image: apache/zeppelin:0.8.0
+    container_name: zeppelin
+    ports:
+      - "${ZEPPELIN_PORT:-8080}:8080"
+    environment:
+      ZEPPELIN_PORT: 8080
+      ZEPPELIN_MEM: ${ZEPPELIN_MEMORY:--Xmx2g}
+      SPARK_MASTER: spark://spark-master:7077
+    volumes:
+      - ./notebooks:/zeppelin/notebook
+      - ./data:/data
+      - zeppelin_data:/zeppelin
+    depends_on:
+      spark-master:
+        condition: service_healthy
+    command: >
+      sh -c "
+        echo 'Starting Apache Zeppelin...' &&
+        bin/zeppelin-daemon.sh start
+      "
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # SBT Build Service (optional, for building Scala projects)
+  sbt:
+    image: hseeberger/scala-sbt:2.10.4-0.13.8
+    container_name: sbt-builder
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - sbt_cache:/root/.sbt
+      - ivy_cache:/root/.ivy2
+    command: tail -f /dev/null
+
+volumes:
+  spark_master_data:
+  spark_worker_data:
+  spark_history_data:
+  zookeeper_data:
+  zookeeper_logs:
+  kafka_data:
+  zeppelin_data:
+  sbt_cache:
+  ivy_cache:
+
+networks:
+  default:
+    name: scala-data-analysis-network
+
+profiles:
+  with-kafka-ui:
+    includes:
+      - kafka-ui
+  with-zeppelin:
+    includes:
+      - zeppelin

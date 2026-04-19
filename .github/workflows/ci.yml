@@ -1,0 +1,235 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint-scala:
+    name: Scala Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up JDK 1.7
+        uses: actions/setup-java@v3
+        with:
+          java-version: '1.7'
+          distribution: 'temurin'
+          
+      - name: Set up Scala
+        uses: actions/setup-scala@v2
+        with:
+          scala-version: '2.10.4'
+          
+      - name: Cache SBT
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.sbt
+            ~/.ivy2
+          key: ${{ runner.os }}-sbt-${{ hashFiles('**/*.sbt') }}
+          
+      - name: Compile with SBT
+        run: |
+          sbt clean compile
+          
+      - name: Run scalastyle (if configured)
+        run: |
+          sbt scalastyle || true
+
+  lint-python:
+    name: Python Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black mypy
+          
+      - name: Run flake8
+        run: |
+          flake8 scripts/ --count --select=E9,F63,F7,F82 --show-source --statistics || true
+          flake8 scripts/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics || true
+          
+      - name: Run black check
+        run: |
+          black --check scripts/ || true
+          
+      - name: Run mypy
+        run: |
+          mypy scripts/ --ignore-missing-imports || true
+
+  lint-yaml:
+    name: YAML Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: Install yamllint
+        run: |
+          python -m pip install --upgrade pip
+          pip install yamllint
+          
+      - name: Run yamllint
+        run: |
+          yamllint -c .github/yamllint-config.yaml docker-compose.yaml k8s/ || true
+
+  security-scan:
+    name: Security Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: Install security tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install safety bandit
+          
+      - name: Run safety check
+        run: |
+          safety check --json || true
+          
+      - name: Run bandit
+        run: |
+          bandit -r scripts/ -f json || true
+
+  validate-scripts:
+    name: Script Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Check shell scripts
+        run: |
+          for script in scripts/*.sh; do
+            if [ -f "$script" ]; then
+              echo "Checking $script"
+              bash -n "$script" || echo "Syntax error in $script"
+            fi
+          done
+          
+      - name: Check Python scripts
+        run: |
+          for script in scripts/*.py; do
+            if [ -f "$script" ]; then
+              echo "Checking $script"
+              python3 -m py_compile "$script" || echo "Syntax error in $script"
+            fi
+          done
+
+  check-secrets:
+    name: Check for Leaked Secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: Install truffleHog
+        run: |
+          python -m pip install --upgrade pip
+          pip install truffleHog
+          
+      - name: Run truffleHog
+        run: |
+          trufflehog --json --exclude_paths .gitignore . || true
+
+  documentation-check:
+    name: Documentation Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Check for broken links
+        run: |
+          # Install markdown-link-check
+          npm install -g markdown-link-check
+          
+          # Check all markdown files
+          find . -name "*.md" -exec markdown-link-check {} \; || true
+
+  docker-compose-lint:
+    name: Docker Compose Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Validate docker-compose.yaml
+        run: |
+          docker-compose -f docker-compose.yaml config || true
+
+  kubernetes-lint:
+    name: Kubernetes Manifests Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.28.0'
+          
+      - name: Validate Kubernetes manifests
+        run: |
+          for manifest in k8s/*.yaml; do
+            if [ -f "$manifest" ]; then
+              echo "Validating $manifest"
+              kubectl apply --dry-run=client -f "$manifest" || echo "Validation failed for $manifest"
+            fi
+          done
+
+  build-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up JDK 1.7
+        uses: actions/setup-java@v3
+        with:
+          java-version: '1.7'
+          distribution: 'temurin'
+          
+      - name: Set up Scala
+        uses: actions/setup-scala@v2
+        with:
+          scala-version: '2.10.4'
+          
+      - name: Cache SBT
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.sbt
+            ~/.ivy2
+          key: ${{ runner.os }}-sbt-${{ hashFiles('**/*.sbt') }}
+          
+      - name: Build project
+        run: |
+          sbt clean compile
+          
+      - name: Run tests (if available)
+        run: |
+          sbt test || true

@@ -1,5 +1,13 @@
+# Scala
 *.class
 *.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
 
 # sbt specific
 .cache/
@@ -11,15 +19,154 @@ lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
+.project
+.build
+.settings
+.bsp
+.scala_dependencies
+.worksheet
 
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
 
-#Idea specific
-## File-based project format:
+# IDE specific
+.idea/
 *.ipr
 *.iws
+*.iml
+.vscode/
+*.code-workspace
+.DS_Store
+Thumbs.db
 
-## Directory-based project format:
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+**/.ipynb_checkpoints/*
+
+# PyCharm
 .idea/
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Data files (generated)
+data/sample/*.csv
+!data/sample/.gitkeep
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Spark and Hadoop
+spark-warehouse/
+metastore_db/
+.derby
+
+# MinIO/ObjectScale data
+minio_data/
+objectscale_data/
+
+# Kubernetes
+*.kubeconfig
+kubeconfig
+
+# Docker
+docker-compose.override.yml
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.bak
+*.backup
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Sensitive configuration
+config/local/
+config/secrets/
+*secret*.yaml
+*secret*.yml
+*secret*.json
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Documentation build
+docs/_build/
+docs/.doctrees/
+site/
+
+# Generated scripts
+scripts/*.sh.bak
+scripts/*.py.bak
+
+# Solution notebooks (if you want to keep them private)
+# solutions/

@@ -1,0 +1,82 @@
+# Scala Data Analysis Code Practice - SEO Configuration
+
+# Site Information
+title: Scala Data Analysis Code Practice
+description: Comprehensive Scala data analysis learning environment with hands-on labs for Breeze, Spark, MLlib, streaming, and graph processing
+author: Scala Data Analysis Practice Community
+keywords: scala data analysis, spark scala, breeze scala, data science scala, machine learning scala, apache spark, data visualization, scala programming, data engineering scala, scala ml
+
+# Site URLs
+baseurl: "/scala-dataanalysis-code-practice"
+url: "https://nellaivijay.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# SEO Settings
+lang: en
+locale: en_US
+twitter:
+  username: "@scala"
+  card: summary_large_image
+facebook:
+  app_id: 
+  publisher: 
+  admins: 
+logo: /assets/logo.png
+social:
+  name: Scala Data Analysis Practice
+  links:
+    - https://github.com/nellaivijay/scala-dataanalysis-code-practice
+    - https://twitter.com/scala
+
+# Google Analytics
+google_analytics: UA-123456789-1
+
+# Exclude from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+  labs:
+    output: true
+    permalink: /labs/:path/
+  wiki:
+    output: true
+    permalink: /wiki/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "docs"
+  - scope:
+      path: ""
+      type: "labs"
+    values:
+      layout: "labs"
+  - scope:
+      path: ""
+      type: "wiki"
+    values:
+      layout: "wiki"

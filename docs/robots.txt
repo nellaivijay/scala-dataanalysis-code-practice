@@ -1,0 +1,16 @@
+# robots.txt for Scala Data Analysis Code Practice
+# Allow all web crawlers to access the site
+User-agent: *
+Allow: /
+
+# Disallow certain directories
+Disallow: /private/
+Disallow: /admin/
+Disallow: /temp/
+Disallow: /cache/
+
+# Sitemap location
+Sitemap: https://nellaivijay.github.io/scala-dataanalysis-code-practice/sitemap.xml
+
+# Crawl-delay to be respectful
+Crawl-delay: 1

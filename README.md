@@ -197,6 +197,23 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 - 🐛 [Issue Tracker](https://github.com/nellaivijay/scala-dataanalysis-code-practice/issues)
 - ⭐ **Star the repo** to show your support!
 
+## 🔗 Related Practice Repositories
+
+Continue your learning journey with these related repositories:
+
+### AI/ML Practice
+- [🤖 DSPy Code Practice](https://github.com/nellaivijay/dspy-code-practice) - Declarative LLM programming
+- [🧠 LLM Fine-Tuning Practice](https://github.com/nellaivijay/llm-fine-tuning-practice) - Model fine-tuning techniques
+
+### Data Engineering Practice
+- [🦆 DuckDB Code Practice](https://github.com/nellaivijay/duckdb-code-practice) - Analytics & SQL optimization
+- [⚡ Apache Spark Code Practice](https://github.com/nellaivijay/spark-code-practice) - Big data processing
+- [🏔️ Apache Iceberg Code Practice](https://github.com/nellaivijay/iceberg-code-practice) - Lakehouse architecture
+- [🔧 Apache Beam Code Practice](https://github.com/nellaivijay/beam-code-practice) - Data pipelines
+
+### Resource Hub
+- [📚 Awesome My Notes](https://github.com/nellaivijay/awesome-my-notes) - Comprehensive technical notes and learning resources
+
 ## 📄 License
 
 Apache License 2.0 - Free for educational and commercial use

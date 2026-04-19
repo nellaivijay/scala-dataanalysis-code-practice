@@ -2,6 +2,8 @@ organization := "com.scalaanalysis"
 
 name := "scala-dataanalysis-code-practice"
 
+description := "Comprehensive Scala data analysis learning environment with hands-on labs for Breeze numerical computing, Apache Spark data processing, MLlib machine learning, Spark Streaming real-time processing, and GraphX graph processing. Features 7 progressive chapters with 50+ exercises covering vectors, matrices, DataFrames, data visualization, clustering, classification, regression, dimensionality reduction, cluster deployment, and real-time analytics."
+
 version := "1.0.0"
 
 scalaVersion := "2.10.4"

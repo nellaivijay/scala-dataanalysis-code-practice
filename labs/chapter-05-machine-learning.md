@@ -1,5 +1,13 @@
 # Lab 5: Learning from Data - Spark MLlib (Linear Regression, Classification, Clustering and PCA)
 
+## Overview
+
+Machine learning is where data analysis meets prediction and automation. This lab introduces Spark MLlib, Apache Spark's scalable machine learning library. You'll learn to build, train, and evaluate machine learning models including linear regression, classification, clustering, and dimensionality reduction. These skills enable you to extract predictive insights from data and automate decision-making processes.
+
+**What makes this lab important**: Machine learning has become essential across industries for predictive analytics, recommendation systems, fraud detection, and countless other applications. Understanding MLlib's approach to machine learning in a distributed context prepares you for real-world ML engineering challenges where data volume and complexity require scalable solutions.
+
+**Real-world applications**: Predictive maintenance in manufacturing, fraud detection in finance, recommendation systems in e-commerce, customer churn prediction, spam filtering, image classification, and any scenario where historical data can be used to predict future outcomes or automate decision-making.
+
 ## Learning Objectives
 
 By the end of this lab, you will be able to:

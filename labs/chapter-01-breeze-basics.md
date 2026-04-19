@@ -1,5 +1,13 @@
 # Lab 1: Getting Started with Breeze - Vectors, Matrices and RNGs
 
+## Overview
+
+This comprehensive lab introduces you to Breeze, Scala's powerful numerical computing library. Breeze provides the foundation for scientific computing, machine learning, and data analysis in Scala, similar to NumPy in Python or MATLAB in traditional environments. You'll learn to work with vectors, matrices, random number generation, and linear algebra operations - essential skills for any data analysis or machine learning work.
+
+**What makes this lab important**: Breeze is the backbone of many Scala machine learning libraries and is essential for understanding how numerical computations work at a low level. Mastering Breeze will give you a solid foundation for more advanced topics like Spark MLlib and custom algorithm implementation.
+
+**Real-world applications**: Financial modeling, scientific computing, statistical analysis, machine learning feature engineering, signal processing, and any domain that requires numerical computations on large datasets.
+
 ## Learning Objectives
 
 By the end of this lab, you will be able to:

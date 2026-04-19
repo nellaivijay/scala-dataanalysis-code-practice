@@ -1,6 +1,14 @@
 # Setup Guide for Scala Data Analysis Code Practice
 
-This guide will help you set up your development environment for the Scala Data Analysis Code Practice labs.
+## Overview
+
+This comprehensive setup guide will help you configure a complete development environment for the Scala Data Analysis Code Practice labs. Setting up a proper development environment is crucial for a smooth learning experience and ensures you can focus on learning concepts rather than troubleshooting configuration issues.
+
+This guide covers installation of all required tools (Java, Scala, SBT, Spark), configuration of development environments (Docker, IDEs), and verification steps to ensure everything works correctly. Whether you're setting up on Linux, macOS, or Windows, you'll find detailed instructions tailored to your platform.
+
+**What this guide covers**: Complete environment setup from scratch, including Java Development Kit, Scala programming language, SBT build tool, Apache Spark, optional Docker setup, and IDE configuration. Each step includes verification commands to ensure successful installation.
+
+**Time investment**: 30-60 minutes for complete setup, depending on your system and experience level.
 
 ## Prerequisites
 

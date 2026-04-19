@@ -1,5 +1,13 @@
 # Lab 2: Getting Started with Spark - DataFrames, Vectors and Matrices
 
+## Overview
+
+This lab introduces Apache Spark, the unified analytics engine for large-scale data processing. Spark has become the de facto standard for big data processing due to its speed, ease of use, and comprehensive ecosystem. You'll learn to set up Spark environments, work with DataFrames (Spark's structured data abstraction), and understand distributed computing concepts that power modern data engineering.
+
+**What makes this lab important**: Spark is the foundation of modern big data processing. Understanding DataFrames, Spark's core abstraction, is essential for any data engineering or data science work. This lab bridges the gap between single-machine data analysis (from Lab 1) and distributed computing, preparing you for real-world big data challenges.
+
+**Real-world applications**: ETL pipelines at scale, real-time analytics, log processing, data warehousing, machine learning model training on large datasets, and any scenario where data volume exceeds single-machine memory limits. Companies like Netflix, Uber, and Airbnb use Spark for their core data processing infrastructure.
+
 ## Learning Objectives
 
 By the end of this lab, you will be able to:

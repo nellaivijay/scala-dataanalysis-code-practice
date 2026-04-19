@@ -1,6 +1,12 @@
 # Troubleshooting Guide for Scala Data Analysis Code Practice
 
-This guide addresses common issues you may encounter while working with the Scala Data Analysis Code Practice labs.
+## Overview
+
+This comprehensive troubleshooting guide addresses common issues you may encounter while working with the Scala Data Analysis Code Practice labs. Development environments can be complex, and issues are inevitable - this guide provides systematic approaches to diagnose and resolve problems efficiently.
+
+**What this guide covers**: Common installation issues, compilation errors, runtime exceptions, performance problems, Docker container issues, and Spark-specific challenges. Each issue includes systematic diagnosis steps, multiple solution approaches, and preventive measures to avoid recurrence.
+
+**How to use this guide**: Start with the category that matches your issue, try the solutions in order, and follow the diagnostic steps to identify the root cause. If you don't find your issue here, check the community resources listed at the end of the guide.
 
 ## Common Issues and Solutions
 

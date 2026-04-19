@@ -1,5 +1,13 @@
 # Lab 6: Scaling Up - Deploying Spark on Standalone Cluster, EC2, Mesos and YARN
 
+## Overview
+
+Moving from development to production requires understanding cluster deployment and resource management. This lab covers the practical aspects of deploying Spark applications in production environments across different cluster managers: standalone clusters, AWS EC2, Apache Mesos, and Hadoop YARN. You'll learn to optimize performance, manage resources, and ensure your applications can handle real-world workloads.
+
+**What makes this lab important**: Development environments differ significantly from production. Understanding cluster deployment, resource allocation, and performance optimization is what makes data engineers valuable in production environments. This lab bridges the gap between writing Spark code and running it reliably at scale in production systems.
+
+**Real-world applications**: Production data pipeline deployment, big data processing in enterprise environments, cloud-based data engineering, cost optimization through efficient resource utilization, and ensuring high availability and performance for data applications. These skills are essential for senior data engineering roles.
+
 ## Learning Objectives
 
 By the end of this lab, you will be able to:

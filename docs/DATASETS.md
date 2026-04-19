@@ -1,6 +1,12 @@
 # Scala Data Analysis Code Practice - Dataset Documentation
 
-This document describes the sample datasets available in this repository for hands-on learning.
+## Overview
+
+This document provides comprehensive information about the sample datasets available in this repository for hands-on learning. Datasets are essential for practicing data analysis techniques, and this guide explains their structure, usage, and the types of analyses they support.
+
+**Why these datasets matter**: Real-world datasets help bridge the gap between theoretical knowledge and practical application. Each dataset has been selected to demonstrate specific data analysis techniques, from basic data manipulation to advanced machine learning. Understanding dataset structure and characteristics is fundamental to effective data analysis.
+
+**Dataset variety**: The repository includes datasets from different domains (education, finance, biology, automotive) to provide diverse learning experiences. This variety helps you apply techniques to different types of data and understand how to adapt your approach based on data characteristics.
 
 ## Available Datasets
 

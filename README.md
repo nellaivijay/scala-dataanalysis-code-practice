@@ -1,3 +1,27 @@
+# Scala Data Analysis Code Practice
+
+[![Scala](https://img.shields.io/badge/Scala-2.10%2B-red)](https://www.scala-lang.org/)
+[![Apache Spark](https://img.shields.io/badge/Apache%20Spark-1.6%2B-orange)](https://spark.apache.org/)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange)](https://jupyter.org/)
+
+## 📖 Table of Contents
+
+- [🎯 Learn Scala Data Analysis with Free, Hands-On Labs](#-learn-scala-data-analysis-with-free-hands-on-labs)
+- [🌟 Why Choose This Repository?](#-why-choose-this-repository)
+- [🏗️ Modern Project Structure](#-modern-project-structure)
+- [🚀 Quick Start](#-quick-start)
+- [📚 Structured Learning Path](#-structured-learning-path)
+- [🛠️ Core Technologies Covered](#️-core-technologies-covered)
+- [📖 Comprehensive Lab Curriculum](#-comprehensive-lab-curriculum)
+- [🔧 Development Workflow](#-development-workflow)
+- [📊 Real-World Datasets Included](#-real-world-datasets-included)
+- [🤝 Contributing & Community](#-contributing--community)
+- [🔗 Related Practice Repositories](#-related-practice-repositories)
+- [📄 License](#-license)
+- [🔗 Additional Resources](#-additional-resources)
+- [🎓 Educational Mission](#-educational-mission)
+
 <!--
 SEO Metadata
 Title: Scala Data Analysis Code Practice - Free Hands-on Labs for Data Science
@@ -5,8 +29,6 @@ Description: Master Scala data analysis with free, hands-on labs. Practice Spark
 Keywords: scala data analysis, spark scala, breeze scala, data science scala, machine learning scala, apache spark, data visualization, scala programming, data engineering scala, scala ml, big data scala
 Author: Scala Data Analysis Practice Community
 -->
-
-# Scala Data Analysis Code Practice
 
 ## 🎯 Learn Scala Data Analysis with Free, Hands-On Labs
 

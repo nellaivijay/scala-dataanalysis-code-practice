@@ -35,7 +35,11 @@ jobs:
       - name: Compile with SBT
         run: |
           sbt clean compile
-          
+
+      - name: Run scalafmt check (if configured)
+        run: |
+          sbt scalafmtCheckAll || true
+
       - name: Run scalastyle (if configured)
         run: |
           sbt scalastyle || true
